@@ -20,7 +20,7 @@ const controller = {
 
   post: (req, res) => {
     db.insertMany(req.body)
-      .then(() => res.status(201).send('posted'))
+      .then(data => res.status(201).send(data))
       .catch(err => console.error(err));
   },
 
@@ -34,16 +34,29 @@ const controller = {
   update: (req, res) => {
     let { id } = req.params;
     db.updateOne({ id }, req.body)
-      .then(() => res.status(202).send('updated'))
+      .then(data => res.status(202).send(data))
+      .catch(err => console.error(err));
+  },
+
+  getPropId: (req, res) => {
+    let { prop_id } = req.params;
+    db.find({ prop_id: prop_id })
+      .then(data => res.status(200).send(data))
+      .catch(err => console.error(err));
+  },
+
+  deleteByPropId: (req, res) => {
+    let { prop_id } = req.params;
+    db.deleteMany({ prop_id })
+      .then(data => res.status(203).send(data))
+      .catch(err => console.error(err));
+  },
+  updatePropId: (req, res) => {
+    let { prop_id } = req.params;
+    db.updateMany({ prop_id }, req.body)
+      .then(data => res.status(202).send(data))
       .catch(err => console.error(err));
   }
-
-  // getPropId: (req, res) => {
-  //   let { prop_id } = req.params;
-  //   db.find({ prop_id: prop_id })
-  //     .then(data => res.status(200).send(data))
-  //     .catch(err => console.error(err));
-  // }
 };
 
 module.exports = controller;
