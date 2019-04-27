@@ -21,6 +21,7 @@ const controller = {
   },
 
   post: (req, res) => {
+    // let startTime = new Date();
     db.create(req.body)
       .then(() => res.status(201).send('posted'))
       .catch(err => console.error(err));
@@ -49,8 +50,12 @@ const controller = {
 
   getPropId: (req, res) => {
     let { prop_id } = req.params;
-    db.findAll({ where: { prop_id: prop_id } })
-      .then(data => res.status(200).send(data))
+    // let startTime = new Date();
+    db.findAll({ limit: 10, where: { prop_id: prop_id } })
+      .then(data => {
+        // data.push(`${new Date() - startTime} ms`);
+        res.status(200).send(data);
+      })
       .catch(err => console.error(err));
   }
 };

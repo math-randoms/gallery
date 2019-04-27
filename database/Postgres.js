@@ -1,7 +1,7 @@
 // CREATE DATABASE gallery
 
 // CREATE TABLE galleries (ID SERIAL PRIMARY KEY, location VARCHAR(30), title VARCHAR(30), urls text[]);
-const Pool = require('pg').Pool;
+// const Pool = require('pg').Pool;
 
 const Sequelize = require('sequelize');
 
@@ -10,7 +10,9 @@ const connection = new Sequelize('gallery', 'Annie', '', {
   dialect: 'postgres',
   define: {
     timestamps: false
-  }
+  },
+  logging: false,
+  pool: { maxConnections: 20, maxIdleTime: 30 }
 });
 
 connection
